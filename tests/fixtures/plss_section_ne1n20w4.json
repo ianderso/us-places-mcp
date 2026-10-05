@@ -1,0 +1,108 @@
+{
+ "displayFieldName": "PLSSID",
+ "fieldAliases": {
+  "FRSTDIVID": "First Division Identifier",
+  "FRSTDIVLAB": "First Division Label"
+ },
+ "geometryType": "esriGeometryPolygon",
+ "spatialReference": {
+  "wkid": 4326,
+  "latestWkid": 4326
+ },
+ "fields": [
+  {
+   "name": "FRSTDIVID",
+   "type": "esriFieldTypeString",
+   "alias": "First Division Identifier",
+   "length": 50
+  },
+  {
+   "name": "FRSTDIVLAB",
+   "type": "esriFieldTypeString",
+   "alias": "First Division Label",
+   "length": 20
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "FRSTDIVID": "NE060010N0200W0SN040",
+    "FRSTDIVLAB": "04"
+   },
+   "geometry": {
+    "rings": [
+     [
+      [
+       -99.577788,
+       40.074755
+      ],
+      [
+       -99.582515,
+       40.074702
+      ],
+      [
+       -99.587242,
+       40.07465
+      ],
+      [
+       -99.591969,
+       40.074597
+      ],
+      [
+       -99.592114,
+       40.078145
+      ],
+      [
+       -99.592258,
+       40.081692
+      ],
+      [
+       -99.592334,
+       40.085277
+      ],
+      [
+       -99.59241,
+       40.08888
+      ],
+      [
+       -99.587644,
+       40.088899
+      ],
+      [
+       -99.582878,
+       40.088917
+      ],
+      [
+       -99.578112,
+       40.088935
+      ],
+      [
+       -99.573346,
+       40.088953
+      ],
+      [
+       -99.573295,
+       40.085366
+      ],
+      [
+       -99.573244,
+       40.081805
+      ],
+      [
+       -99.573153,
+       40.078306
+      ],
+      [
+       -99.573061,
+       40.074808
+      ],
+      [
+       -99.577788,
+       40.074755
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

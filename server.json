@@ -1,0 +1,49 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.ianderso/us-places-mcp",
+  "title": "US Places, Then",
+  "description": "Which county held a US spot on a date; federal land descriptions and PLSS; patent to case file.",
+  "repository": {
+    "url": "https://github.com/ianderso/us-places-mcp",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "registryBaseUrl": "https://pypi.org",
+      "identifier": "us-places-mcp",
+      "version": "0.1.0",
+      "runtimeHint": "uvx",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "US_PLACES_OVERPASS_URL",
+          "description": "OpenHistoricalMap's Overpass endpoint.",
+          "default": "https://overpass-api.openhistoricalmap.org/api/interpreter"
+        },
+        {
+          "name": "US_PLACES_PLSS_URL",
+          "description": "BLM's national PLSS (CadNSDI) map service.",
+          "default": "https://gis.blm.gov/arcgis/rest/services/Cadastral/BLM_Natl_PLSS_CadNSDI/MapServer"
+        },
+        {
+          "name": "US_PLACES_CACHE_DIR",
+          "description": "Directory for the on-disk response cache.",
+          "default": "~/.cache/us-places-mcp"
+        },
+        {
+          "name": "US_PLACES_TIMEOUT",
+          "description": "HTTP timeout in seconds.",
+          "default": "60"
+        },
+        {
+          "name": "US_PLACES_CONTACT",
+          "description": "An email address or URL appended to the User-Agent, so the services can reach whoever runs the server."
+        }
+      ]
+    }
+  ]
+}

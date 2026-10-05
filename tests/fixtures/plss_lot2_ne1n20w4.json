@@ -1,0 +1,83 @@
+{
+ "displayFieldName": "STATEABBR",
+ "fieldAliases": {
+  "SECDIVID": "Second Division Identifier",
+  "SECDIVTYP": "Second Division Type Code",
+  "SECDIVLAB": "Second Division Label",
+  "GOVLOT": "Government Lot Number",
+  "GISACRE": "GIS Area Acres"
+ },
+ "geometryType": "esriGeometryPolygon",
+ "spatialReference": {
+  "wkid": 4326,
+  "latestWkid": 4326
+ },
+ "fields": [
+  {
+   "name": "SECDIVID",
+   "type": "esriFieldTypeString",
+   "alias": "Second Division Identifier",
+   "length": 50
+  },
+  {
+   "name": "SECDIVTYP",
+   "type": "esriFieldTypeString",
+   "alias": "Second Division Type Code",
+   "length": 1
+  },
+  {
+   "name": "SECDIVLAB",
+   "type": "esriFieldTypeString",
+   "alias": "Second Division Label",
+   "length": 255
+  },
+  {
+   "name": "GOVLOT",
+   "type": "esriFieldTypeString",
+   "alias": "Government Lot Number",
+   "length": 255
+  },
+  {
+   "name": "GISACRE",
+   "type": "esriFieldTypeDouble",
+   "alias": "GIS Area Acres"
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "SECDIVID": "NE060010N0200W0SN040L2",
+    "SECDIVTYP": "L",
+    "SECDIVLAB": "L 2",
+    "GOVLOT": "2",
+    "GISACRE": null
+   },
+   "geometry": {
+    "rings": [
+     [
+      [
+       -99.578041,
+       40.085344
+      ],
+      [
+       -99.582787,
+       40.085322
+      ],
+      [
+       -99.582878,
+       40.088917
+      ],
+      [
+       -99.578112,
+       40.088935
+      ],
+      [
+       -99.578041,
+       40.085344
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

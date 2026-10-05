@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/ianderso/us-places-mcp/security/advisories/new
+    about: Privately, not in a public issue. See SECURITY.md.
+  - name: A wrong county boundary
+    url: https://www.openhistoricalmap.org
+    about: The boundaries are the Newberry atlas as imported into OpenHistoricalMap; corrections belong there.

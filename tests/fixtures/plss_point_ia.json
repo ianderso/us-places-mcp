@@ -1,0 +1,148 @@
+{
+ "displayFieldName": "STATEABBR",
+ "fieldAliases": {
+  "STATEABBR": "State Abbreviation",
+  "PRINMERCD": "Principal Meridian Code",
+  "TWNSHPNO": "Township Number",
+  "TWNSHPDIR": "Township Direction",
+  "RANGENO": "Range Number",
+  "RANGEDIR": "Range Direction",
+  "PLSSID": "Township Identifier",
+  "TWNSHPLAB": "Township Label",
+  "FRSTDIVID": "First Division Identifier",
+  "FRSTDIVNO": "First Division Number",
+  "FRSTDIVLAB": "First Division Label",
+  "SECDIVID": "Second Division Identifier",
+  "SECDIVTYP": "Second Division Type Code",
+  "SECDIVLAB": "Second Division Label",
+  "GOVLOT": "Government Lot Number",
+  "GISACRE": "GIS Area Acres",
+  "STEWARD": "Data Steward"
+ },
+ "fields": [
+  {
+   "name": "STATEABBR",
+   "type": "esriFieldTypeString",
+   "alias": "State Abbreviation",
+   "length": 2
+  },
+  {
+   "name": "PRINMERCD",
+   "type": "esriFieldTypeString",
+   "alias": "Principal Meridian Code",
+   "length": 2
+  },
+  {
+   "name": "TWNSHPNO",
+   "type": "esriFieldTypeString",
+   "alias": "Township Number",
+   "length": 3
+  },
+  {
+   "name": "TWNSHPDIR",
+   "type": "esriFieldTypeString",
+   "alias": "Township Direction",
+   "length": 1
+  },
+  {
+   "name": "RANGENO",
+   "type": "esriFieldTypeString",
+   "alias": "Range Number",
+   "length": 3
+  },
+  {
+   "name": "RANGEDIR",
+   "type": "esriFieldTypeString",
+   "alias": "Range Direction",
+   "length": 1
+  },
+  {
+   "name": "PLSSID",
+   "type": "esriFieldTypeString",
+   "alias": "Township Identifier",
+   "length": 50
+  },
+  {
+   "name": "TWNSHPLAB",
+   "type": "esriFieldTypeString",
+   "alias": "Township Label",
+   "length": 20
+  },
+  {
+   "name": "FRSTDIVID",
+   "type": "esriFieldTypeString",
+   "alias": "First Division Identifier",
+   "length": 50
+  },
+  {
+   "name": "FRSTDIVNO",
+   "type": "esriFieldTypeString",
+   "alias": "First Division Number",
+   "length": 10
+  },
+  {
+   "name": "FRSTDIVLAB",
+   "type": "esriFieldTypeString",
+   "alias": "First Division Label",
+   "length": 20
+  },
+  {
+   "name": "SECDIVID",
+   "type": "esriFieldTypeString",
+   "alias": "Second Division Identifier",
+   "length": 50
+  },
+  {
+   "name": "SECDIVTYP",
+   "type": "esriFieldTypeString",
+   "alias": "Second Division Type Code",
+   "length": 1
+  },
+  {
+   "name": "SECDIVLAB",
+   "type": "esriFieldTypeString",
+   "alias": "Second Division Label",
+   "length": 255
+  },
+  {
+   "name": "GOVLOT",
+   "type": "esriFieldTypeString",
+   "alias": "Government Lot Number",
+   "length": 255
+  },
+  {
+   "name": "GISACRE",
+   "type": "esriFieldTypeDouble",
+   "alias": "GIS Area Acres"
+  },
+  {
+   "name": "STEWARD",
+   "type": "esriFieldTypeString",
+   "alias": "Data Steward",
+   "length": 50
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "STATEABBR": "IA",
+    "PRINMERCD": "05",
+    "TWNSHPNO": "084",
+    "TWNSHPDIR": "N",
+    "RANGENO": "039",
+    "RANGEDIR": "W",
+    "PLSSID": "IA050840N0390W0",
+    "TWNSHPLAB": "84N 39W",
+    "FRSTDIVID": "IA050840N0390W0SN180",
+    "FRSTDIVNO": "18",
+    "FRSTDIVLAB": "18",
+    "SECDIVID": "IA050840N0390W0SN180ASENW",
+    "SECDIVTYP": "A",
+    "SECDIVLAB": "SENW",
+    "GOVLOT": null,
+    "GISACRE": 41.13796321,
+    "STEWARD": "BLM Cadastral - IA"
+   }
+  }
+ ]
+}

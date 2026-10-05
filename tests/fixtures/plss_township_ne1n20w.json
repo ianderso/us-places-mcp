@@ -1,0 +1,45 @@
+{
+ "displayFieldName": "SRVNAME",
+ "fieldAliases": {
+  "PLSSID": "PLSSID",
+  "TWNSHPLAB": "TWNSHPLAB",
+  "TWNSHPDPCD": "TWNSHPDPCD",
+  "STEWARD": "Data Steward for PLSS Township Data"
+ },
+ "fields": [
+  {
+   "name": "PLSSID",
+   "type": "esriFieldTypeString",
+   "alias": "PLSSID",
+   "length": 16
+  },
+  {
+   "name": "TWNSHPLAB",
+   "type": "esriFieldTypeString",
+   "alias": "TWNSHPLAB",
+   "length": 20
+  },
+  {
+   "name": "TWNSHPDPCD",
+   "type": "esriFieldTypeString",
+   "alias": "TWNSHPDPCD",
+   "length": 1
+  },
+  {
+   "name": "STEWARD",
+   "type": "esriFieldTypeString",
+   "alias": "Data Steward for PLSS Township Data",
+   "length": 50
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "PLSSID": "NE060010N0200W0",
+    "TWNSHPLAB": "1N 20W",
+    "TWNSHPDPCD": null,
+    "STEWARD": null
+   }
+  }
+ ]
+}

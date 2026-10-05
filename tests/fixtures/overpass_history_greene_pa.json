@@ -1,0 +1,59 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-10-05T20:02:54Z",
+    "copyright": "The data included in this document is from www.openhistoricalmap.org. The data is made available under CC0."
+  },
+  "elements": [
+
+{
+  "type": "relation",
+  "id": 2786553,
+  "tags": {
+    "admin_level": "6",
+    "boundary": "administrative",
+    "import:county_type": "county",
+    "license": "CC0-1.0",
+    "name": "Greene County",
+    "nl_ahcb:id": "12662",
+    "nl_ahcb:id_text": "pas_greene",
+    "nl_ahcb:source": "Pa. Stat., ch. 2223, secs. 1-2/17:40-41",
+    "nl_ahcb:version": "2",
+    "place": "county",
+    "source": "https://publications.newberry.org/nl_ahcbp/downloads/united_states.html",
+    "source:name": "Newberry Library Atlas of Historical County Boundaries",
+    "start_date": "1802-01-22",
+    "start_event": "GREENE lost to WASHINGTON.",
+    "type": "boundary",
+    "wikidata": "Q494098",
+    "wikipedia": "en:Greene County, Pennsylvania"
+  }
+},
+{
+  "type": "relation",
+  "id": 2786554,
+  "tags": {
+    "admin_level": "6",
+    "boundary": "administrative",
+    "end_date": "1802-01-21",
+    "import:county_type": "county",
+    "license": "CC0-1.0",
+    "name": "Greene County",
+    "nl_ahcb:id": "12661",
+    "nl_ahcb:id_text": "pas_greene",
+    "nl_ahcb:source": "Pa. Stat., ch. 1870, sec. 1/15:380-381",
+    "nl_ahcb:version": "1",
+    "place": "county",
+    "source": "https://publications.newberry.org/nl_ahcbp/downloads/united_states.html",
+    "source:name": "Newberry Library Atlas of Historical County Boundaries",
+    "start_date": "1796-02-09",
+    "start_event": "GREENE created from WASHINGTON.",
+    "type": "boundary",
+    "wikidata": "Q494098",
+    "wikipedia": "en:Greene County, Pennsylvania"
+  }
+}
+
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "cache_status": [],
+  "county_at": [
+    "date",
+    "latitude",
+    "longitude",
+    "refresh"
+  ],
+  "county_history": [
+    "county",
+    "refresh",
+    "state"
+  ],
+  "find_land_entry_file": [
+    "authority",
+    "certificate_number",
+    "land_office",
+    "patentee",
+    "signature_date",
+    "state"
+  ],
+  "glo_links": [
+    "document_category",
+    "document_id",
+    "search_text",
+    "state"
+  ],
+  "parse_legal_description": [
+    "state",
+    "text"
+  ],
+  "plss_from_point": [
+    "latitude",
+    "longitude",
+    "refresh"
+  ],
+  "plss_locate": [
+    "description",
+    "refresh",
+    "state"
+  ],
+  "public_land_state": [
+    "state"
+  ]
+}

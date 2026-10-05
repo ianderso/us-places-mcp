@@ -1,0 +1,150 @@
+{
+ "displayFieldName": "STATEABBR",
+ "fieldAliases": {
+  "SECDIVID": "Second Division Identifier",
+  "SECDIVTYP": "Second Division Type Code",
+  "SECDIVLAB": "Second Division Label",
+  "GOVLOT": "Government Lot Number",
+  "GISACRE": "GIS Area Acres"
+ },
+ "geometryType": "esriGeometryPolygon",
+ "spatialReference": {
+  "wkid": 4326,
+  "latestWkid": 4326
+ },
+ "fields": [
+  {
+   "name": "SECDIVID",
+   "type": "esriFieldTypeString",
+   "alias": "Second Division Identifier",
+   "length": 50
+  },
+  {
+   "name": "SECDIVTYP",
+   "type": "esriFieldTypeString",
+   "alias": "Second Division Type Code",
+   "length": 1
+  },
+  {
+   "name": "SECDIVLAB",
+   "type": "esriFieldTypeString",
+   "alias": "Second Division Label",
+   "length": 255
+  },
+  {
+   "name": "GOVLOT",
+   "type": "esriFieldTypeString",
+   "alias": "Government Lot Number",
+   "length": 255
+  },
+  {
+   "name": "GISACRE",
+   "type": "esriFieldTypeDouble",
+   "alias": "GIS Area Acres"
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "SECDIVID": "IA050840N0390W0SN180ASENE",
+    "SECDIVTYP": "A",
+    "SECDIVLAB": "SENE",
+    "GOVLOT": null,
+    "GISACRE": 40.99539365
+   },
+   "geometry": {
+    "rings": [
+     [
+      [
+       -95.419973,
+       42.091168
+      ],
+      [
+       -95.419964,
+       42.089352
+      ],
+      [
+       -95.419954,
+       42.087536
+      ],
+      [
+       -95.422442,
+       42.087562
+      ],
+      [
+       -95.424931,
+       42.087588
+      ],
+      [
+       -95.424931,
+       42.089406
+      ],
+      [
+       -95.424932,
+       42.091225
+      ],
+      [
+       -95.422452,
+       42.091196
+      ],
+      [
+       -95.419973,
+       42.091168
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "attributes": {
+    "SECDIVID": "IA050840N0390W0SN180ANENE",
+    "SECDIVTYP": "A",
+    "SECDIVLAB": "NENE",
+    "GOVLOT": null,
+    "GISACRE": 40.71666102
+   },
+   "geometry": {
+    "rings": [
+     [
+      [
+       -95.420038,
+       42.094798
+      ],
+      [
+       -95.419983,
+       42.092983
+      ],
+      [
+       -95.419973,
+       42.091168
+      ],
+      [
+       -95.422452,
+       42.091196
+      ],
+      [
+       -95.424932,
+       42.091225
+      ],
+      [
+       -95.424932,
+       42.093042
+      ],
+      [
+       -95.424933,
+       42.09486
+      ],
+      [
+       -95.422463,
+       42.094827
+      ],
+      [
+       -95.420038,
+       42.094798
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}
