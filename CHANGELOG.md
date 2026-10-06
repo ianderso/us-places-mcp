@@ -32,6 +32,12 @@ Vanished places, and the maps that show them.
 - Settings `US_PLACES_GNIS_URL`, `US_PLACES_GNIS_ARCHIVE_URL`,
   `US_PLACES_TNM_URL` and `US_PLACES_DATAVERSE_URL`.
 
+### Fixed
+
+- `glo_links` sends its state filter as `geostatecodes`, the parameter BLM's
+  search frame was observed using on 2026-10-06; the site ignored the `State`
+  that 0.1.0 sent, so a state-filtered link searched every state.
+
 ### Changed
 
 - The host allowlist covers the new services and Dataverse's file store; a

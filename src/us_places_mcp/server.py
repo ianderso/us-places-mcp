@@ -689,8 +689,9 @@ async def glo_links(
                 return _bad_state(state)
         return {
             "url": glo.search_link(search_text, code, document_category or None),
-            "note": "Open in a browser. The state and category filters follow the site's own "
-            "code and are not verified; if the page ignores them, use the site's facets.",
+            "note": "Open in a browser. The state filter is the one BLM's search frame was "
+            "seen using (geostatecodes, 2026-10-06). The category filter follows the site's "
+            "code and is not verified; if the page ignores it, use the site's facets.",
         }
     except Exception as exc:  # noqa: BLE001 - surfaced as structured error
         return _error(exc)

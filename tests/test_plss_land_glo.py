@@ -92,7 +92,8 @@ def test_the_verified_glo_search_link_byte_for_byte():
 
 def test_glo_filters_are_appended_inside_the_search_term():
     link = glo.search_link("Crothers", "SD", "Patent")
-    assert link.endswith("%26State%3DSD%26documenttype%3DPatent")
+    assert link.endswith("%26geostatecodes%3DSD%26documenttype%3DPatent")
+    assert "State%3D" not in link, "the site ignores State=; it reads geostatecodes="
 
 
 def test_the_glo_record_permalink():

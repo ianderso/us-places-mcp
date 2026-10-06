@@ -227,7 +227,8 @@ async def test_glo_links():
     search = await call_tool(
         "glo_links", search_text="Crothers", state="SD", document_category="Patent"
     )
-    assert "State%3DSD" in search["url"]
+    assert "%26geostatecodes%3DSD%26" in search["url"]
+    assert "geostatecodes, 2026-10-06" in search["note"] and "not verified" in search["note"]
     record = await call_tool("glo_links", document_id="6811616370992565615")
     assert record["url"].endswith("documentid=6811616370992565615")
     assert (await call_tool("glo_links", document_id="12; x"))["error"] == "invalid_id"

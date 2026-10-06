@@ -174,9 +174,16 @@ January 2021 GNIS national file (316 MB).
 
 Verified 2026-10-04 (see the research spec this server came from): a search
 link is `https://glorecords.blm.gov/s/advanced-search?searchTerm=` followed by
-the URL-encoded path `/search?q=…&page=1&pageSize=25`. The `State` and
-`documenttype` parameters are taken from the site's code, not verified. A
-record link is `…/s/advanced-search#/searchresults?documentid=<id>`.
+the URL-encoded path `/search?q=…&page=1&pageSize=25`. A record link is
+`…/s/advanced-search#/searchresults?documentid=<id>`.
+
+- **The state filter is `geostatecodes`.** On 2026-10-06 BLM's search frame
+  was observed sending `geostatecodes=SD` for a South Dakota search. The
+  `State=SD` that 0.1.0 sent, read from the site's code, is ignored by the
+  site, so 0.1.0's state filter did nothing. The page itself is a Salesforce
+  community app and does not show the parameter; the search runs in a frame.
+- The `documenttype` parameter is still taken from the site's code and not
+  verified.
 
 ## National Archives bridge
 
