@@ -28,7 +28,9 @@ README = Path(__file__).parent.parent / "README.md"
 
 #: Ceiling on the combined tool descriptions, which are sent to the model on
 #: every session before any work happens. Raise it deliberately, not by accident.
-DESCRIPTION_BUDGET = 4_500
+#: 4,500 -> 5,500 for 0.2.0: GNIS names, historical topographic maps and post
+#: offices each carry pitfalls a model must read before trusting an answer.
+DESCRIPTION_BUDGET = 5_500
 
 #: Tools that touch no network at all.
 LOCAL_TOOLS = OFFLINE_TOOLS
