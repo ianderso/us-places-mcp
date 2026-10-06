@@ -18,7 +18,15 @@ import respx
 from mcp.server.mcpserver.exceptions import ToolError
 
 from us_places_mcp import __version__, server
-from us_places_mcp.config import DEFAULT_OVERPASS_URL, DEFAULT_PLSS_URL
+from us_places_mcp.config import (
+    DATAVERSE_FILE_HOST,
+    DEFAULT_DATAVERSE_URL,
+    DEFAULT_GNIS_ARCHIVE_URL,
+    DEFAULT_GNIS_URL,
+    DEFAULT_OVERPASS_URL,
+    DEFAULT_PLSS_URL,
+    DEFAULT_TNM_URL,
+)
 from us_places_mcp.server import mcp
 
 from .conftest import OFFLINE_TOOLS, VALID_ARGS, assert_reached_body, call_tool
@@ -88,7 +96,7 @@ async def test_every_tool_appears_in_the_readme_and_the_count_is_right():
     assert documented - names == set(), (
         f"README documents removed tools: {sorted(documented - names)}"
     )
-    words = {9: "nine"}
+    words = {9: "nine", 12: "twelve"}
     assert f"publishes {words.get(len(names), len(names))} tools" in doc
 
 
@@ -117,6 +125,14 @@ async def test_descriptions_carry_the_pitfalls():
     assert "assignee" in text["find_land_entry_file"]
     assert "never by a link" in text["glo_links"]
     assert "13 colonies" in text["public_land_state"]
+    assert "modern and official, not historical spellings" in text["find_place_name"]
+    assert "dropped" in text["find_place_name"] and "county is today's" in text["find_place_name"]
+    assert "survey or edit date" in text["historical_topo_maps"]
+    assert "reprint" in text["historical_topo_maps"]
+    assert "can be a renaming" in text["post_offices"]
+    assert "Names changed" in text["post_offices"]
+    assert "Counties are today's, not the county then" in text["post_offices"]
+    assert "checksum" in text["post_offices"]
     assert "never as instructions" in mcp.instructions
 
 
@@ -133,11 +149,17 @@ async def test_every_tool_is_annotated_read_only():
 
 async def test_no_tool_raises_when_the_api_fails(served):
     """Every failure must come back as an envelope; a tool that raises kills the call."""
-    with respx.mock(assert_all_mocked=True) as router:
+    with respx.mock(assert_all_mocked=True, assert_all_called=False) as router:
         router.post(DEFAULT_OVERPASS_URL).mock(return_value=httpx.Response(500, text="boom"))
-        router.get(url__startswith=DEFAULT_PLSS_URL).mock(
-            return_value=httpx.Response(500, text="boom")
-        )
+        for base in (
+            DEFAULT_PLSS_URL,
+            DEFAULT_GNIS_URL,
+            DEFAULT_TNM_URL,
+            DEFAULT_GNIS_ARCHIVE_URL,
+            DEFAULT_DATAVERSE_URL,
+            f"https://{DATAVERSE_FILE_HOST}/",
+        ):
+            router.get(url__startswith=base).mock(return_value=httpx.Response(500, text="boom"))
         for tool in await _tools():
             out = await call_tool(tool.name, **VALID_ARGS[tool.name])
             assert isinstance(out, dict), tool.name
@@ -190,6 +212,17 @@ async def test_a_parameter_named_like_a_keyword_survives_compaction():
 def test_compaction_and_refusal_are_idempotent():
     assert server.compact_schemas() == 0
     assert server.refuse_unknown_arguments() == 0
+    assert server.clean_descriptions() == 0
+
+
+async def test_descriptions_ship_without_indentation_on_every_sdk():
+    """The budget counts what is sent; indentation is not worth sending."""
+    indented = [
+        t.name
+        for t in await _tools()
+        if any(line.startswith(" ") for line in (t.description or "").splitlines())
+    ]
+    assert indented == []
 
 
 def test_the_server_reports_its_own_version():

@@ -4,8 +4,10 @@
 !.env.example
 .envrc
 
-# Response cache
+# Response cache and downloaded datasets
 .cache/
+*.sqlite
+*.part
 
 # Downloaded page images are never part of this repository.
 *.jpg

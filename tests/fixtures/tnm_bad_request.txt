@@ -1,0 +1,1 @@
+{errorMessage=[BadRequest] 'Value 'abc' of property bbox must be numeric and have at least four numbers' , errorType=Exception, requestId=29a96750-6d4b-48ae-acdc-3881baaf0bd8, stackTrace=["  File \"\/var\/task\/get_products.py\", line 56, in lambda_handler\n    raise Exception(\"[BadRequest] '{}' \".format(e.args[0]))\n"]}

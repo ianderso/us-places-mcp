@@ -1,0 +1,466 @@
+{
+ "status": "OK",
+ "data": {
+  "id": 4478040,
+  "identifier": "DVN/NUKCNA",
+  "persistentUrl": "https://doi.org/10.7910/DVN/NUKCNA",
+  "protocol": "doi",
+  "authority": "10.7910",
+  "separator": "/",
+  "publisher": "Harvard Dataverse",
+  "publicationDate": "2021-03-30",
+  "storageIdentifier": "s3://10.7910/DVN/NUKCNA",
+  "effectiveDatasetFileCountLimit": 1000,
+  "datasetFileUploadsAvailable": 992,
+  "datasetType": "dataset",
+  "locks": [],
+  "latestVersion": {
+   "id": 237831,
+   "datasetId": 4478040,
+   "datasetPersistentId": "doi:10.7910/DVN/NUKCNA",
+   "datasetType": "dataset",
+   "storageIdentifier": "s3://10.7910/DVN/NUKCNA",
+   "versionNumber": 1,
+   "internalVersionNumber": 42,
+   "versionMinorNumber": 0,
+   "versionState": "RELEASED",
+   "latestVersionPublishingState": "DRAFT",
+   "deaccessionLink": "",
+   "UNF": "UNF:6:8ROmiI5/4qA8jHrt62PpyA==",
+   "lastUpdateTime": "2021-03-31T03:30:27Z",
+   "releaseTime": "2021-03-31T03:30:27Z",
+   "createTime": "2021-03-27T19:07:06Z",
+   "publicationDate": "2021-03-30",
+   "citationDate": "2021-03-30",
+   "effectiveDatasetFileCountLimit": 1000,
+   "datasetFileUploadsAvailable": 992,
+   "license": {
+    "name": "CC0 1.0",
+    "uri": "http://creativecommons.org/publicdomain/zero/1.0",
+    "iconUri": "https://licensebuttons.net/p/zero/1.0/88x31.png",
+    "rightsIdentifier": "CC0-1.0",
+    "rightsIdentifierScheme": "SPDX",
+    "schemeUri": "https://spdx.org/licenses/",
+    "languageCode": "en"
+   },
+   "fileAccessRequest": false,
+   "metadataBlocks": {
+    "citation": {
+     "displayName": "Citation Metadata",
+     "name": "citation",
+     "fields": [
+      {
+       "typeName": "title",
+       "multiple": false,
+       "typeClass": "primitive",
+       "value": "US Post Offices"
+      },
+      {
+       "typeName": "alternativeURL",
+       "multiple": false,
+       "typeClass": "primitive",
+       "value": "https://cblevins.github.io/us-post-offices"
+      },
+      {
+       "typeName": "author",
+       "multiple": true,
+       "typeClass": "compound",
+       "value": [
+        {
+         "authorName": {
+          "typeName": "authorName",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "Blevins, Cameron"
+         },
+         "authorAffiliation": {
+          "typeName": "authorAffiliation",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "University of Colorado Denver"
+         },
+         "authorIdentifierScheme": {
+          "typeName": "authorIdentifierScheme",
+          "multiple": false,
+          "typeClass": "controlledVocabulary",
+          "value": "ORCID"
+         },
+         "authorIdentifier": {
+          "typeName": "authorIdentifier",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "https://orcid.org/0000-0002-5272-5770"
+         }
+        },
+        {
+         "authorName": {
+          "typeName": "authorName",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "Helbock, Richard W."
+         }
+        }
+       ]
+      },
+      {
+       "typeName": "datasetContact",
+       "multiple": true,
+       "typeClass": "compound",
+       "value": [
+        {
+         "datasetContactName": {
+          "typeName": "datasetContactName",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "Blevins, Cameron"
+         },
+         "datasetContactAffiliation": {
+          "typeName": "datasetContactAffiliation",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "University of Colorado Denver"
+         },
+         "datasetContactEmail": {
+          "typeName": "datasetContactEmail",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "cameron.blevins@ucdenver.edu"
+         }
+        }
+       ]
+      },
+      {
+       "typeName": "dsDescription",
+       "multiple": true,
+       "typeClass": "compound",
+       "value": [
+        {
+         "dsDescriptionValue": {
+          "typeName": "dsDescriptionValue",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "Historical and spatial dataset of 166,140 post offices that operated in the United States between 1639-2000. Richard Helbock collected historical information about post offices and Cameron Blevins processed these records to geocode them. For more information about the dataset and its creation see: <a href=\"https://cblevins.github.io/us-post-offices\">US Post Offices</a>. The project's <a href=\"https://github.com/cblevins/us-post-offices/\">Github repository</a> contains the code used to geocode post office records."
+         }
+        }
+       ]
+      },
+      {
+       "typeName": "subject",
+       "multiple": true,
+       "typeClass": "controlledVocabulary",
+       "value": [
+        "Arts and Humanities",
+        "Social Sciences"
+       ]
+      },
+      {
+       "typeName": "keyword",
+       "multiple": true,
+       "typeClass": "compound",
+       "value": [
+        {
+         "keywordValue": {
+          "typeName": "keywordValue",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "post offices"
+         }
+        },
+        {
+         "keywordValue": {
+          "typeName": "keywordValue",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "federal government"
+         }
+        },
+        {
+         "keywordValue": {
+          "typeName": "keywordValue",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "historical geography"
+         }
+        },
+        {
+         "keywordValue": {
+          "typeName": "keywordValue",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "united states history"
+         }
+        }
+       ]
+      },
+      {
+       "typeName": "publication",
+       "multiple": true,
+       "typeClass": "compound",
+       "value": [
+        {
+         "publicationCitation": {
+          "typeName": "publicationCitation",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "Cameron Blevins, <i>Paper Trails: The US Post and the Making of the American West</i> (New York: Oxford University Press, 2021)."
+         },
+         "publicationIDType": {
+          "typeName": "publicationIDType",
+          "multiple": false,
+          "typeClass": "controlledVocabulary",
+          "value": "isbn"
+         },
+         "publicationIDNumber": {
+          "typeName": "publicationIDNumber",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "9780190053673"
+         },
+         "publicationURL": {
+          "typeName": "publicationURL",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "https://global.oup.com/academic/product/paper-trails-9780190053673"
+         }
+        }
+       ]
+      },
+      {
+       "typeName": "notesText",
+       "multiple": false,
+       "typeClass": "primitive",
+       "value": "For more information about the dataset and its creation see: <a href=\"https://cblevins.github.io/us-post-offices\">US Post Offices</a>. The project's <a href=\"https://github.com/cblevins/us-post-offices/\">Github repository</a> contains the code used to geocode post office records."
+      },
+      {
+       "typeName": "contributor",
+       "multiple": true,
+       "typeClass": "compound",
+       "value": [
+        {
+         "contributorType": {
+          "typeName": "contributorType",
+          "multiple": false,
+          "typeClass": "controlledVocabulary",
+          "value": "Data Collector"
+         },
+         "contributorName": {
+          "typeName": "contributorName",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "Helbock, Richard W."
+         }
+        }
+       ]
+      },
+      {
+       "typeName": "depositor",
+       "multiple": false,
+       "typeClass": "primitive",
+       "value": "Blevins, Cameron"
+      },
+      {
+       "typeName": "dateOfDeposit",
+       "multiple": false,
+       "typeClass": "primitive",
+       "value": "2021-03-30"
+      },
+      {
+       "typeName": "timePeriodCovered",
+       "multiple": true,
+       "typeClass": "compound",
+       "value": [
+        {
+         "timePeriodCoveredStart": {
+          "typeName": "timePeriodCoveredStart",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "1639"
+         },
+         "timePeriodCoveredEnd": {
+          "typeName": "timePeriodCoveredEnd",
+          "multiple": false,
+          "typeClass": "primitive",
+          "value": "2000"
+         }
+        }
+       ]
+      },
+      {
+       "typeName": "kindOfData",
+       "multiple": true,
+       "typeClass": "primitive",
+       "value": [
+        "administrative records data"
+       ]
+      },
+      {
+       "typeName": "dataSources",
+       "multiple": true,
+       "typeClass": "primitive",
+       "value": [
+        "Richard W. Helbock, United States Post Offices, vol. 1, The West (Scappoose, OR: La Posta, 1998); Richard W. Helbock, United States Post Offices, vol. 2, The Great Plains (Scappoose, OR: La Posta, 1998); Richard W. Helbock, United States Post Offices, vol. 3, The Upper Midwest (Lake Oswego, OR: La Posta, 2001); Richard W. Helbock, United States Post Offices, vol. 4, The Northeast (Scappoose, OR: La Posta, 2001); Richard W. Helbock, United States Post Offices, vol. 5, The Ohio Valley (Scappoose, OR: La Posta, 2002); Richard W. Helbock, United States Post Offices, vol. 6, The Mid Atlantic (Scappoose, OR: La Posta, 2004); Richard W. Helbock, United States Post Offices, vol. 7, The Lower Mississippi Valley (Scappoose, OR: La Posta, 2005); Richard W. Helbock, United States Post Offices, vol. 8, The Southeast (Scappoose, OR: La Posta, 2007)."
+       ]
+      }
+     ]
+    }
+   },
+   "files": [
+    {
+     "description": "Tabular data containing variant names for GNIS domestic features, downloaded in March 2021 from: https://www.usgs.gov/core-science-systems/ngp/board-on-geographic-names/domestic-names.",
+     "label": "AllNames_20210101_nocitation.txt",
+     "restricted": false,
+     "version": 4,
+     "datasetVersionId": 237831,
+     "dataFile": {
+      "id": 4491882,
+      "persistentId": "",
+      "filename": "AllNames_20210101_nocitation.txt",
+      "contentType": "text/plain",
+      "friendlyType": "Plain Text",
+      "filesize": 106186109,
+      "description": "Tabular data containing variant names for GNIS domestic features, downloaded in March 2021 from: https://www.usgs.gov/core-science-systems/ngp/board-on-geographic-names/domestic-names.",
+      "storageIdentifier": "s3://dvn-cloud:17885dfbc71-25270947b9f2",
+      "rootDataFileId": -1,
+      "md5": "0d4cf4f499b0a559c7c04bc7a011c83f",
+      "checksum": {
+       "type": "MD5",
+       "value": "0d4cf4f499b0a559c7c04bc7a011c83f"
+      },
+      "tabularData": false,
+      "creationDate": "2021-03-30",
+      "publicationDate": "2021-03-30",
+      "lastUpdateTime": "2021-03-31T03:30:27Z",
+      "fileAccessRequest": false
+     }
+    },
+    {
+     "description": "Tabular data containing all official domestic GNIS features for the United States, downloaded in March 2021 from: https://dataverse.harvard.edu/api/access/datafile/4491883",
+     "label": "NationalFile_20210101.txt",
+     "restricted": false,
+     "version": 2,
+     "datasetVersionId": 237831,
+     "dataFile": {
+      "id": 4491883,
+      "persistentId": "",
+      "filename": "NationalFile_20210101.txt",
+      "contentType": "text/plain",
+      "friendlyType": "Plain Text",
+      "filesize": 316378998,
+      "description": "Tabular data containing all official domestic GNIS features for the United States, downloaded in March 2021 from: https://dataverse.harvard.edu/api/access/datafile/4491883",
+      "storageIdentifier": "s3://dvn-cloud:17885e0135f-05963f46098a",
+      "rootDataFileId": -1,
+      "md5": "804833dc08dfa3e736264a231081ac70",
+      "checksum": {
+       "type": "MD5",
+       "value": "804833dc08dfa3e736264a231081ac70"
+      },
+      "tabularData": false,
+      "creationDate": "2021-03-30",
+      "publicationDate": "2021-03-30",
+      "lastUpdateTime": "2021-03-31T03:30:27Z",
+      "fileAccessRequest": false
+     }
+    },
+    {
+     "description": "Field descriptions and example values for the US Post Offices dataset. Created in March 2021.",
+     "label": "us-post-offices-data-dictionary.tab",
+     "restricted": false,
+     "version": 4,
+     "datasetVersionId": 237831,
+     "dataFile": {
+      "id": 4491716,
+      "persistentId": "",
+      "filename": "us-post-offices-data-dictionary.tab",
+      "contentType": "text/tab-separated-values",
+      "friendlyType": "Tab-Delimited",
+      "filesize": 5501,
+      "description": "Field descriptions and example values for the US Post Offices dataset. Created in March 2021.",
+      "storageIdentifier": "s3://dvn-cloud:1788579e8d0-cd49ed95ffe9",
+      "originalFileFormat": "text/csv",
+      "originalFormatLabel": "Comma Separated Values",
+      "originalFileSize": 5312,
+      "originalFileName": "us-post-offices-data-dictionary.csv",
+      "UNF": "UNF:6:ATW2g2vkUwFqnCNry8haKA==",
+      "rootDataFileId": 4491716,
+      "md5": "2ab64362245f32a5e202d57974abdf68",
+      "checksum": {
+       "type": "MD5",
+       "value": "2ab64362245f32a5e202d57974abdf68"
+      },
+      "tabularData": true,
+      "creationDate": "2021-03-30",
+      "publicationDate": "2021-03-30",
+      "lastUpdateTime": "2021-03-31T03:30:27Z",
+      "fileAccessRequest": false
+     }
+    },
+    {
+     "description": "Alternative dataset to us-post-offices.csv, containing semi-random coordinates assigned to any post offices that were not successfully geolocated using the GNIS database. ",
+     "label": "us-post-offices-random-coords.tab",
+     "restricted": false,
+     "version": 4,
+     "datasetVersionId": 237831,
+     "dataFile": {
+      "id": 4491714,
+      "persistentId": "",
+      "filename": "us-post-offices-random-coords.tab",
+      "contentType": "text/tab-separated-values",
+      "friendlyType": "Tab-Delimited",
+      "filesize": 34839440,
+      "description": "Alternative dataset to us-post-offices.csv, containing semi-random coordinates assigned to any post offices that were not successfully geolocated using the GNIS database. ",
+      "storageIdentifier": "s3://dvn-cloud:1788573dc49-cd4bbf83f0e7",
+      "originalFileFormat": "text/csv",
+      "originalFormatLabel": "Comma Separated Values",
+      "originalFileSize": 33510380,
+      "originalFileName": "us-post-offices-random-coords.csv",
+      "UNF": "UNF:6:PRJesJXJa0KWjjKmPk5ybw==",
+      "rootDataFileId": 4491714,
+      "md5": "2f07da0698c7597cd8b495218d1caf4f",
+      "checksum": {
+       "type": "MD5",
+       "value": "2f07da0698c7597cd8b495218d1caf4f"
+      },
+      "tabularData": true,
+      "creationDate": "2021-03-30",
+      "publicationDate": "2021-03-30",
+      "lastUpdateTime": "2021-03-31T03:30:27Z",
+      "fileAccessRequest": false
+     }
+    },
+    {
+     "description": "The main tabular dataset generated from geocoding Helbock's data using the GNIS database.",
+     "label": "us-post-offices.tab",
+     "restricted": false,
+     "version": 4,
+     "datasetVersionId": 237831,
+     "dataFile": {
+      "id": 4491713,
+      "persistentId": "",
+      "filename": "us-post-offices.tab",
+      "contentType": "text/tab-separated-values",
+      "friendlyType": "Tab-Delimited",
+      "filesize": 32412349,
+      "description": "The main tabular dataset generated from geocoding Helbock's data using the GNIS database.",
+      "storageIdentifier": "s3://dvn-cloud:1788573e477-5efb4957f967",
+      "originalFileFormat": "text/csv",
+      "originalFormatLabel": "Comma Separated Values",
+      "originalFileSize": 31415567,
+      "originalFileName": "us-post-offices.csv",
+      "UNF": "UNF:6:RD6JjRu0I5KcIvu1+MNyiw==",
+      "rootDataFileId": 4491713,
+      "md5": "72a67b658fdc0befa5a0f48a909cd3dc",
+      "checksum": {
+       "type": "MD5",
+       "value": "72a67b658fdc0befa5a0f48a909cd3dc"
+      },
+      "tabularData": true,
+      "creationDate": "2021-03-30",
+      "publicationDate": "2021-03-30",
+      "lastUpdateTime": "2021-03-31T03:30:27Z",
+      "fileAccessRequest": false
+     }
+    }
+   ]
+  }
+ }
+}

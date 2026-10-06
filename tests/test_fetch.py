@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import json
 import time
+from pathlib import Path
 
 import httpx
 import pytest
@@ -156,3 +157,87 @@ async def test_identical_concurrent_calls_share_one_request(tmp_path, services):
     gate.set()
     assert await one == await two
     assert route.call_count == 1 and fetcher.shared_waits == 1
+
+
+# --------------------------------------------------------------------------- #
+# Downloads
+# --------------------------------------------------------------------------- #
+ARCHIVE = "https://prd-tnm.s3.amazonaws.com/StagedProducts/GeographicNames/Archive/x.txt"
+DATAVERSE = "https://dataverse.harvard.edu/api/access/datafile/1?format=original"
+STORE = "https://dvn-cloud-iqss.s3.amazonaws.com/10.7910/x.orig"
+
+
+async def test_a_download_is_streamed_to_a_part_file(tmp_path, services):
+    services.get(ARCHIVE).mock(
+        return_value=httpx.Response(200, content=b"a|b\n1|2\n", headers={"ETag": '"abc"'})
+    )
+    got = await make_fetcher(tmp_path).download(ARCHIVE, tmp_path / "data", max_bytes=100)
+    assert got.path.parent == tmp_path / "data" and got.path.suffix == ".part"
+    assert got.path.read_bytes() == b"a|b\n1|2\n"
+    assert (got.size, got.etag, got.url) == (8, "abc", ARCHIVE)
+
+
+async def test_a_download_follows_a_redirect_to_an_allowed_host(tmp_path, services):
+    services.get(DATAVERSE).mock(return_value=httpx.Response(303, headers={"Location": STORE}))
+    store = services.get(STORE).mock(return_value=httpx.Response(200, content=b"csv"))
+    fetcher = make_fetcher(tmp_path)
+    got = await fetcher.download(DATAVERSE, tmp_path, max_bytes=100)
+    assert got.url == STORE and got.path.read_bytes() == b"csv"
+    assert store.calls.last.request.headers["accept"] == "*/*"
+    assert fetcher.live_calls == 2
+
+
+async def test_a_download_refuses_a_redirect_to_another_host(tmp_path, services):
+    services.get(DATAVERSE).mock(
+        return_value=httpx.Response(302, headers={"Location": "https://example.org/x.csv"})
+    )
+    with pytest.raises(HostNotAllowed):
+        await make_fetcher(tmp_path).download(DATAVERSE, tmp_path / "d", max_bytes=100)
+    assert list((tmp_path / "d").iterdir()) == []
+
+
+async def test_a_redirect_loop_gives_up(tmp_path, services):
+    services.get(DATAVERSE).mock(return_value=httpx.Response(302, headers={"Location": DATAVERSE}))
+    with pytest.raises(UpstreamError, match="redirects"):
+        await make_fetcher(tmp_path).download(DATAVERSE, tmp_path / "d", max_bytes=100)
+    assert list((tmp_path / "d").iterdir()) == []
+
+
+async def test_a_download_larger_than_expected_is_refused(tmp_path, services):
+    services.get(ARCHIVE).mock(return_value=httpx.Response(200, content=b"x" * 1000))
+    with pytest.raises(UpstreamError) as caught:
+        await make_fetcher(tmp_path).download(ARCHIVE, tmp_path / "d", max_bytes=999)
+    assert caught.value.status == 413
+    assert list((tmp_path / "d").iterdir()) == []
+
+
+async def test_a_failing_download_is_retried_and_then_reported(tmp_path, services):
+    answers = iter([httpx.Response(503), httpx.Response(200, content=b"ok")])
+    route = services.get(ARCHIVE).mock(side_effect=lambda r: next(answers))
+    got = await make_fetcher(tmp_path).download(ARCHIVE, tmp_path, max_bytes=100)
+    assert got.path.read_bytes() == b"ok" and route.call_count == 2
+
+    services.get(STORE).mock(return_value=httpx.Response(404, text="NoSuchKey"))
+    with pytest.raises(UpstreamError) as caught:
+        await make_fetcher(tmp_path).download(STORE, tmp_path / "d", max_bytes=100)
+    assert caught.value.status == 404
+
+
+async def test_a_download_cut_short_is_retried(tmp_path, services):
+    short = httpx.Response(200, content=b"abc", headers={"Content-Length": "10"})
+    answers = iter([short, httpx.Response(200, content=b"abcdefghij")])
+    route = services.get(ARCHIVE).mock(side_effect=lambda r: next(answers))
+    got = await make_fetcher(tmp_path).download(ARCHIVE, tmp_path, max_bytes=100)
+    assert got.size == 10 and route.call_count == 2
+
+
+async def test_a_tnm_bad_request_inside_a_200_is_an_error_and_not_cached(tmp_path, services):
+    tnm = "https://tnmaccess.nationalmap.gov/api/v1/products"
+    body = (Path(__file__).parent / "fixtures" / "tnm_bad_request.txt").read_bytes()
+    services.get(tnm).mock(return_value=httpx.Response(200, content=body))
+    fetcher = make_fetcher(tmp_path)
+    with pytest.raises(UpstreamError) as caught:
+        await fetcher.get_json(tnm, {"bbox": "abc"}, ttl=None)
+    assert caught.value.status == 400
+    assert caught.value.detail.startswith("Value 'abc' of property bbox must be numeric")
+    assert list(fetcher.cache_dir.glob("*.json")) == []

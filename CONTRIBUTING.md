@@ -21,19 +21,25 @@ uv run pytest
 
 The suite is mocked with [respx](https://lundberg.github.io/respx/) against
 recorded answers. It must never touch the live services: OpenHistoricalMap runs
-on donated capacity, and CI should not depend on either service being up.
+on donated capacity, and CI should not depend on any service being up. The
+downloaded datasets are tested on small slices of the real files; never commit
+a whole one.
 
 ## Where things live
 
 | Path | What it holds |
 | --- | --- |
 | `src/us_places_mcp/server.py` | The tools. Their docstrings and `Field` descriptions *are* the published tool descriptions and schema. |
-| `src/us_places_mcp/fetch.py` | The cached, paced HTTP client and the two-host allowlist. |
+| `src/us_places_mcp/fetch.py` | The cached, paced HTTP client, its downloads, and the host allowlist. |
 | `src/us_places_mcp/counties.py` | County-at-date logic over the Newberry atlas. |
 | `src/us_places_mcp/legal.py` | The land-description parser. |
 | `src/us_places_mcp/plss.py` | BLM PLSS queries and geometry. |
 | `src/us_places_mcp/landfiles.py` | From a patent's authority to its case file. |
 | `src/us_places_mcp/glo.py` | GLO Records link builders. |
+| `src/us_places_mcp/gnis.py` | GNIS: the live `find` search and the August 2021 archive. |
+| `src/us_places_mcp/topo.py` | Historical topographic maps from TNM Access. |
+| `src/us_places_mcp/postoffices.py` | The post-office dataset: Dataverse's record, loading and queries. |
+| `src/us_places_mcp/datasets.py` | Downloading, checking and keeping the two datasets. |
 | `src/us_places_mcp/tables.py` | Meridians, states, and which land was federal. |
 | `docs/API-NOTES.md` | What each service was observed to do, and when. |
 | `docs/DESIGN.md` | Why the server is shaped the way it is. |

@@ -1,0 +1,164 @@
+{
+ "results": [
+  {
+   "layerId": 1,
+   "layerName": "Incorporated Places (Civil)",
+   "displayFieldName": "gaz_name",
+   "foundFieldName": "gaz_name",
+   "value": "Borough of Waynesburg",
+   "attributes": {
+    "OBJECTID": "100880",
+    "gaz_id": "1215263",
+    "gaz_name": "Borough of Waynesburg",
+    "gaz_featureclass": "Civil",
+    "fcode": "61401",
+    "state_alpha": "PA",
+    "county_name": "Greene",
+    "shape": "Multipoint",
+    "objectid_1": "1921683",
+    "isunknowncoords": "2",
+    "incounty_id": "2770532"
+   },
+   "geometryType": "esriGeometryMultipoint",
+   "geometry": {
+    "points": [
+     [
+      -80.18553999296019,
+      39.89826302610488
+     ]
+    ],
+    "spatialReference": {
+     "wkid": 4326,
+     "latestWkid": 4326
+    }
+   }
+  },
+  {
+   "layerId": 2,
+   "layerName": "Unincorporated Places (Census)",
+   "displayFieldName": "gaz_name",
+   "foundFieldName": "gaz_name",
+   "value": "West Waynesburg Census Designated Place",
+   "attributes": {
+    "OBJECTID": "176696",
+    "gaz_id": "2630048",
+    "gaz_name": "West Waynesburg Census Designated Place",
+    "gaz_featureclass": "Census",
+    "fcode": "61501",
+    "state_alpha": "PA",
+    "county_name": "Greene",
+    "shape": "Multipoint",
+    "objectid_1": "1925922",
+    "isunknowncoords": "2",
+    "incounty_id": "2830085"
+   },
+   "geometryType": "esriGeometryMultipoint",
+   "geometry": {
+    "points": [
+     [
+      -80.20079657191053,
+      39.90002389108788
+     ]
+    ],
+    "spatialReference": {
+     "wkid": 4326,
+     "latestWkid": 4326
+    }
+   }
+  },
+  {
+   "layerId": 3,
+   "layerName": "Populated Places",
+   "displayFieldName": "gaz_name",
+   "foundFieldName": "gaz_name",
+   "value": "Waynesburg",
+   "attributes": {
+    "OBJECTID": "164261",
+    "gaz_id": "1190723",
+    "gaz_name": "Waynesburg",
+    "gaz_featureclass": "Populated Place",
+    "fcode": "61500",
+    "state_alpha": "PA",
+    "county_name": "Greene",
+    "shape": "Multipoint",
+    "objectid_1": "846845",
+    "isunknowncoords": "2",
+    "incounty_id": "1417687"
+   },
+   "geometryType": "esriGeometryMultipoint",
+   "geometry": {
+    "points": [
+     [
+      -80.17923323396408,
+      39.89647195685462
+     ]
+    ],
+    "spatialReference": {
+     "wkid": 4326,
+     "latestWkid": 4326
+    }
+   }
+  },
+  {
+   "layerId": 3,
+   "layerName": "Populated Places",
+   "displayFieldName": "gaz_name",
+   "foundFieldName": "gaz_name",
+   "value": "West Waynesburg",
+   "attributes": {
+    "OBJECTID": "205044",
+    "gaz_id": "1191132",
+    "gaz_name": "West Waynesburg",
+    "gaz_featureclass": "Populated Place",
+    "fcode": "61500",
+    "state_alpha": "PA",
+    "county_name": "Greene",
+    "shape": "Multipoint",
+    "objectid_1": "855880",
+    "isunknowncoords": "2",
+    "incounty_id": "1211671"
+   },
+   "geometryType": "esriGeometryMultipoint",
+   "geometry": {
+    "points": [
+     [
+      -80.20340084091978,
+      39.900360656648274
+     ]
+    ],
+    "spatialReference": {
+     "wkid": 4326,
+     "latestWkid": 4326
+    }
+   }
+  },
+  {
+   "layerId": 7,
+   "layerName": "Other Hydrographic Features",
+   "displayFieldName": "gaz_name",
+   "foundFieldName": "gaz_name",
+   "value": "Waynesburg Water Company Reservoir",
+   "attributes": {
+    "OBJECTID": "36265",
+    "gaz_id": "1194416",
+    "gaz_name": "Waynesburg Water Company Reservoir",
+    "gaz_featureclass": "Reservoir",
+    "fcode": "43600",
+    "state_alpha": "PA",
+    "county_name": "Greene",
+    "shape": "Point",
+    "objectid_1": "835370",
+    "isunknowncoords": "2"
+   },
+   "geometryType": "esriGeometryPoint",
+   "geometry": {
+    "x": -80.21312314644138,
+    "y": 39.90674935774301,
+    "spatialReference": {
+     "wkid": 4326,
+     "latestWkid": 4326
+    }
+   }
+  }
+ ]
+}

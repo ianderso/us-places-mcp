@@ -6,9 +6,9 @@ import httpx
 import pytest
 
 from us_places_mcp import server
-from us_places_mcp.config import ConfigError
+from us_places_mcp.config import Config, ConfigError
 
-from .conftest import call_tool, fixture, route
+from .conftest import call_tool, fixture, raw, route
 
 WAYNESBURG = {"latitude": 39.896, "longitude": -80.179}
 IOWA_POINT = {"latitude": 42.0877, "longitude": -95.43}
@@ -249,3 +249,29 @@ async def test_a_bad_setting_surfaces_on_the_first_call(monkeypatch):
     monkeypatch.setattr(server, "load_config", broken)
     result = await call_tool("county_at", **WAYNESBURG, date="1795")
     assert result["error"] == "not_configured"
+
+
+def test_the_allowlist_is_the_configured_hosts_and_dataverses_file_store():
+    assert server.hosts(Config()) == {
+        "overpass-api.openhistoricalmap.org": 2.0,
+        "gis.blm.gov": 0.5,
+        "carto.nationalmap.gov": 1.0,
+        "tnmaccess.nationalmap.gov": 1.0,
+        "prd-tnm.s3.amazonaws.com": 1.0,
+        "dataverse.harvard.edu": 1.0,
+        "dvn-cloud-iqss.s3.amazonaws.com": 1.0,
+    }
+    moved = server.hosts(Config(gnis_url="https://names.example.gov/MapServer"))
+    assert "names.example.gov" in moved and "carto.nationalmap.gov" not in moved
+
+
+async def test_cache_status_lists_the_datasets(served, services, data_dir):
+    route(services, offices=raw("post_offices_slice.csv"))
+    before = await call_tool("cache_status")
+    assert before["datasets"]["us_post_offices"] is None
+    assert before["datasets"]["directory"] == str(data_dir)
+    await call_tool("post_offices", state="SD", county="Kingsbury")
+    after = (await call_tool("cache_status"))["datasets"]
+    assert after["us_post_offices"]["offices"] == 42
+    assert after["us_post_offices"]["version"] == "1.0"
+    assert after["gnis_2021_archive"] is None

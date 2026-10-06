@@ -1,16 +1,23 @@
 """Configuration from environment variables.
 
-=========================  ===================================================
-``US_PLACES_OVERPASS_URL``  OpenHistoricalMap's Overpass endpoint.
-``US_PLACES_PLSS_URL``      BLM's national PLSS (CadNSDI) map service.
-``US_PLACES_CACHE_DIR``     Directory for the on-disk response cache.
-``US_PLACES_TIMEOUT``       HTTP timeout in seconds.
-``US_PLACES_CONTACT``       An email address or URL appended to the
-                            User-Agent, so either service can reach whoever
-                            runs this server.
-=========================  ===================================================
+==============================  ==============================================
+``US_PLACES_OVERPASS_URL``       OpenHistoricalMap's Overpass endpoint.
+``US_PLACES_PLSS_URL``           BLM's national PLSS (CadNSDI) map service.
+``US_PLACES_GNIS_URL``           USGS's GNIS map service (The National Map).
+``US_PLACES_GNIS_ARCHIVE_URL``   Where USGS keeps the August 2021 GNIS state
+                                 files.
+``US_PLACES_TNM_URL``            The National Map's TNM Access products API.
+``US_PLACES_DATAVERSE_URL``      Harvard Dataverse, which holds the US post
+                                 offices dataset.
+``US_PLACES_CACHE_DIR``          Directory for the on-disk response cache and
+                                 the downloaded datasets.
+``US_PLACES_TIMEOUT``            HTTP timeout in seconds.
+``US_PLACES_CONTACT``            An email address or URL appended to the
+                                 User-Agent, so the services can reach whoever
+                                 runs this server.
+==============================  ==============================================
 
-None is required: both services are public and need no key. A ``.env`` file
+None is required: every service is public and needs no key. A ``.env`` file
 in the working directory supplies any of these that the environment does not.
 """
 
@@ -32,6 +39,25 @@ DEFAULT_PLSS_URL = (
     "https://gis.blm.gov/arcgis/rest/services/Cadastral/BLM_Natl_PLSS_CadNSDI/MapServer"
 )
 
+#: USGS's Geographic Names Information System, as The National Map serves it.
+DEFAULT_GNIS_URL = "https://carto.nationalmap.gov/arcgis/rest/services/geonames/MapServer"
+
+#: The folder of GNIS state files frozen on 25 August 2021, before GNIS dropped
+#: cemeteries, churches, schools, post offices and other built features.
+DEFAULT_GNIS_ARCHIVE_URL = (
+    "https://prd-tnm.s3.amazonaws.com/StagedProducts/GeographicNames/Archive/MainDomestic"
+)
+
+#: The National Map's product search, which lists the historical topographic maps.
+DEFAULT_TNM_URL = "https://tnmaccess.nationalmap.gov/api/v1/products"
+
+#: Harvard Dataverse, home of the Blevins/Helbock US post offices dataset.
+DEFAULT_DATAVERSE_URL = "https://dataverse.harvard.edu"
+
+#: Where Harvard Dataverse redirects a file download. Not a setting: the
+#: redirect is Dataverse's choice, and this is the one host it may send us to.
+DATAVERSE_FILE_HOST = "dvn-cloud-iqss.s3.amazonaws.com"
+
 
 class ConfigError(RuntimeError):
     """Raised when a setting is present but unusable."""
@@ -41,14 +67,26 @@ class ConfigError(RuntimeError):
 class Config:
     """Resolved server configuration.
 
-    The hosts of the two URLs are the only hosts the server will contact.
+    The hosts of the URLs, and Dataverse's file store, are the only hosts the
+    server will contact.
     """
 
     overpass_url: str = DEFAULT_OVERPASS_URL
     plss_url: str = DEFAULT_PLSS_URL
+    gnis_url: str = DEFAULT_GNIS_URL
+    gnis_archive_url: str = DEFAULT_GNIS_ARCHIVE_URL
+    tnm_url: str = DEFAULT_TNM_URL
+    dataverse_url: str = DEFAULT_DATAVERSE_URL
     cache_dir: Path = field(default_factory=lambda: Path.home() / ".cache" / "us-places-mcp")
     timeout: float = 60.0
     contact: str = ""
+    #: Where downloaded datasets live; None means ``<cache_dir>/data``.
+    datasets_dir: Path | None = None
+
+    @property
+    def data_dir(self) -> Path:
+        """The directory for downloaded datasets: never the repository."""
+        return self.datasets_dir or self.cache_dir / "data"
 
 
 def load_config() -> Config:
@@ -72,6 +110,14 @@ def load_config() -> Config:
         cfg.overpass_url = _https_url("US_PLACES_OVERPASS_URL", raw)
     if raw := (os.environ.get("US_PLACES_PLSS_URL") or "").strip():
         cfg.plss_url = _https_url("US_PLACES_PLSS_URL", raw).rstrip("/")
+    if raw := (os.environ.get("US_PLACES_GNIS_URL") or "").strip():
+        cfg.gnis_url = _https_url("US_PLACES_GNIS_URL", raw).rstrip("/")
+    if raw := (os.environ.get("US_PLACES_GNIS_ARCHIVE_URL") or "").strip():
+        cfg.gnis_archive_url = _https_url("US_PLACES_GNIS_ARCHIVE_URL", raw).rstrip("/")
+    if raw := (os.environ.get("US_PLACES_TNM_URL") or "").strip():
+        cfg.tnm_url = _https_url("US_PLACES_TNM_URL", raw)
+    if raw := (os.environ.get("US_PLACES_DATAVERSE_URL") or "").strip():
+        cfg.dataverse_url = _https_url("US_PLACES_DATAVERSE_URL", raw).rstrip("/")
     if raw := os.environ.get("US_PLACES_CACHE_DIR"):
         cfg.cache_dir = Path(raw).expanduser()
     if raw := os.environ.get("US_PLACES_TIMEOUT"):
