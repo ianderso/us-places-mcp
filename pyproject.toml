@@ -1,13 +1,13 @@
 [project]
 name = "us-places-mcp"
 dynamic = ["version"]
-description = "MCP server for where things were, then: which county held a spot on a given date (Newberry county-boundary atlas via OpenHistoricalMap), federal land descriptions and PLSS locations, and the route from a land patent to its case file. For genealogy and history."
+description = "MCP server for where things were, then: which county held a spot on a given date (Newberry county-boundary atlas via OpenHistoricalMap), federal land descriptions and PLSS locations, the route from a land patent to its case file, GNIS place names (with the 2021 archive of cemeteries, churches and schools), historical USGS topographic maps, and US post offices 1639-2000. For genealogy and history."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Ian Anderson" }]
-keywords = ["mcp", "genealogy", "family-history", "county-boundaries", "plss", "land-records", "historical-gis", "openhistoricalmap", "research"]
+keywords = ["mcp", "genealogy", "family-history", "county-boundaries", "plss", "land-records", "historical-gis", "openhistoricalmap", "gnis", "topographic-maps", "post-offices", "research"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: End Users/Desktop",

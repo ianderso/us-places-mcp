@@ -1,0 +1,37 @@
+{
+ "results": [
+  {
+   "layerId": 12,
+   "layerName": "Historical Cultural-Political Points",
+   "displayFieldName": "gaz_name",
+   "foundFieldName": "gaz_name",
+   "value": "Fort Zellar (historical)",
+   "attributes": {
+    "OBJECTID": "18373",
+    "gaz_id": "1211876",
+    "gaz_name": "Fort Zellar (historical)",
+    "gaz_featureclass": "Military",
+    "fcode": "67300",
+    "state_alpha": "PA",
+    "county_name": "Lebanon",
+    "shape": "Multipoint",
+    "objectid_1": "1329723",
+    "isunknowncoords": "2",
+    "incounty_id": "1213756"
+   },
+   "geometryType": "esriGeometryMultipoint",
+   "geometry": {
+    "points": [
+     [
+      -76.21666882896545,
+      40.35000810488492
+     ]
+    ],
+    "spatialReference": {
+     "wkid": 4326,
+     "latestWkid": 4326
+    }
+   }
+  }
+ ]
+}

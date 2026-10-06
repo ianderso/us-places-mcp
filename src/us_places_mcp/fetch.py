@@ -1,17 +1,21 @@
-"""A cached, paced HTTP client for the two public services this server reads.
+"""A cached, paced HTTP client for the public services this server reads.
 
-* **Two hosts.** A request hook refuses any host but OpenHistoricalMap's
-  Overpass API and BLM's PLSS map service, so nothing a model passes in can
-  make the server fetch another site.
+* **A fixed set of hosts.** A request hook refuses any host but the configured
+  services (OpenHistoricalMap's Overpass API, BLM's PLSS map service, USGS's
+  GNIS and TNM Access, USGS's file bucket, Harvard Dataverse and its file
+  store), so nothing a model passes in can make the server fetch another site.
+  A download follows a redirect only to one of those hosts.
 * **One request at a time per host,** with a courtesy gap: Overpass runs on
   donated capacity and publishes no rate limit.
 * **Identical concurrent calls share one request.**
 * **Answers are cached on disk,** keyed by host, path and canonical
   parameters, for a time each caller chooses. A failure is never cached.
+  Downloads are not cached here: the caller checks the file and keeps it.
 
-Both services can report an error inside a 200 response: ArcGIS as
-``{"error": {...}}``, Overpass as a ``remark`` naming a runtime error. Those
-are raised like any other failure, so they are never cached as answers.
+The services can report an error inside a 200 response: ArcGIS as
+``{"error": {...}}``, Overpass as a ``remark`` naming a runtime error, TNM
+Access as a non-JSON ``{errorMessage=[BadRequest] ...}``. Those are raised
+like any other failure, so they are never cached as answers.
 """
 
 from __future__ import annotations
@@ -22,12 +26,14 @@ import json
 import logging
 import os
 import random
+import re
 import time
 import uuid
 from collections.abc import Awaitable, Callable
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlsplit
+from urllib.parse import urljoin, urlsplit
 
 import httpx
 
@@ -41,6 +47,13 @@ PROJECT_URL = "https://github.com/ianderso/us-places-mcp"
 #: Cache lifetimes, in seconds.
 DAY = 86_400.0
 FOREVER: float | None = None
+
+#: Statuses a download follows, and how many hops it follows.
+REDIRECTS = frozenset({301, 302, 303, 307, 308})
+MAX_REDIRECTS = 3
+
+#: Bytes read from a download at a time.
+CHUNK = 1 << 16
 
 
 class UpstreamError(RuntimeError):
@@ -58,6 +71,24 @@ class UpstreamError(RuntimeError):
 
 class HostNotAllowed(RuntimeError):
     """Raised when a request is aimed at a host this server does not read."""
+
+
+class _Incomplete(Exception):
+    """A download that ended before its stated length; retried like no answer."""
+
+
+@dataclass(frozen=True)
+class Download:
+    """A file streamed to disk, for the caller to check and keep or delete.
+
+    ``etag`` is the server's, unquoted, or "" if it sent none; ``url`` is the
+    address the file finally came from, after any redirect.
+    """
+
+    path: Path
+    size: int
+    etag: str
+    url: str
 
 
 def user_agent(contact: str = "") -> str:
@@ -144,6 +175,63 @@ class Fetcher:
     ) -> Any:
         """POST ``form`` to ``url`` and return decoded JSON, cached."""
         return await self._cached("POST", url, form, ttl=ttl, refresh=refresh)
+
+    async def download(self, url: str, dest_dir: Path, *, max_bytes: int) -> Download:
+        """Stream ``url`` into a new file in ``dest_dir``.
+
+        Follows up to ``MAX_REDIRECTS`` redirects, each only to an allowed
+        host, and is paced and retried like any other request. The file is
+        named ``.download-*.part``; the caller verifies it and moves it into
+        place or deletes it. On failure nothing is left behind.
+        """
+        dest_dir.mkdir(parents=True, exist_ok=True)
+        tmp = dest_dir / f".download-{uuid.uuid4().hex}.part"
+        try:
+            for _ in range(MAX_REDIRECTS + 1):
+                host = urlsplit(url).hostname or ""
+                if host not in self._intervals:
+                    raise HostNotAllowed(
+                        f"refusing a request to {host!r}: this server only reads "
+                        f"{', '.join(sorted(self._intervals))}"
+                    )
+                got = await self._stream(url, host, tmp, max_bytes)
+                if isinstance(got, Download):
+                    return got
+                url = got
+            raise UpstreamError(0, f"more than {MAX_REDIRECTS} redirects", host=host)
+        except BaseException:
+            tmp.unlink(missing_ok=True)
+            raise
+
+    async def _stream(self, url: str, host: str, tmp: Path, max_bytes: int) -> Download | str:
+        """One hop of a download: the file, or the address it was redirected to."""
+        attempt = 0
+        while True:
+            status, detail = 0, ""
+            async with self._locks[host]:
+                await self._pace(host)
+                self._last_start[host] = self._clock()
+                self.live_calls += 1
+                try:
+                    async with self._http.stream("GET", url, headers={"Accept": "*/*"}) as response:
+                        status = response.status_code
+                        location = response.headers.get("location")
+                        if status in REDIRECTS and location:
+                            return urljoin(url, location)
+                        if status < 300:
+                            return await _save(response, tmp, max_bytes, host)
+                        await response.aread()
+                        detail = _detail(response)
+                except httpx.TransportError as exc:
+                    status, detail = 0, f"{type(exc).__name__}: {exc}".rstrip(": ")
+                except _Incomplete as exc:
+                    status, detail = 0, str(exc)
+            if not (status == 0 or status == 429 or status >= 500) or attempt >= self._retries:
+                raise UpstreamError(status, detail, host=host)
+            attempt += 1
+            wait = self._backoff * 2 ** (attempt - 1) + random.uniform(0, self._backoff / 2)
+            logger.info("%s -> %s; retry %d in %.1fs", host, status or "no response", attempt, wait)
+            await self._sleep(wait)
 
     async def _cached(
         self, method: str, url: str, params: dict, *, ttl: float | None, refresh: bool
@@ -244,10 +332,35 @@ def _key(method: str, url: str, params: dict) -> str:
     return hashlib.sha256(f"{method} {url}\n{canonical}".encode()).hexdigest()[:24]
 
 
+async def _save(response: httpx.Response, tmp: Path, max_bytes: int, host: str) -> Download:
+    """Write a streamed body to ``tmp``, refusing one larger than ``max_bytes``."""
+    size = 0
+    with tmp.open("wb") as out:
+        async for chunk in response.aiter_bytes(CHUNK):
+            size += len(chunk)
+            if size > max_bytes:
+                raise UpstreamError(
+                    413, f"the file is larger than the {max_bytes:,} bytes expected", host=host
+                )
+            out.write(chunk)
+    stated = response.headers.get("content-length", "")
+    if stated.isdigit() and int(stated) != size:
+        raise _Incomplete(f"the download stopped at {size:,} of {int(stated):,} bytes")
+    etag = response.headers.get("etag", "").strip()
+    return Download(tmp, size, etag.removeprefix("W/").strip('"'), str(response.url))
+
+
+#: How TNM Access reports a bad request: a 200 whose body is not JSON.
+_TNM_BAD_REQUEST = re.compile(r"\[BadRequest\]\s*'?(.*?)'?\s*(?:,\s*errorType=|$)")
+
+
 def _decode(response: httpx.Response, host: str) -> Any:
     try:
         data = response.json()
     except ValueError:
+        text = " ".join(response.text.split())
+        if m := _TNM_BAD_REQUEST.search(text):
+            raise UpstreamError(400, m.group(1).strip() or "bad request", host=host) from None
         raise UpstreamError(502, "the answer was not JSON", host=host) from None
     if isinstance(data, dict):
         err = data.get("error")

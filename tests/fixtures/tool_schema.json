@@ -19,11 +19,26 @@
     "signature_date",
     "state"
   ],
+  "find_place_name": [
+    "county",
+    "feature_class",
+    "name",
+    "refresh",
+    "state"
+  ],
   "glo_links": [
     "document_category",
     "document_id",
     "search_text",
     "state"
+  ],
+  "historical_topo_maps": [
+    "latitude",
+    "longitude",
+    "refresh",
+    "scale",
+    "year_from",
+    "year_to"
   ],
   "parse_legal_description": [
     "state",
@@ -38,6 +53,15 @@
     "description",
     "refresh",
     "state"
+  ],
+  "post_offices": [
+    "county",
+    "latitude",
+    "longitude",
+    "name",
+    "radius_km",
+    "state",
+    "year"
   ],
   "public_land_state": [
     "state"

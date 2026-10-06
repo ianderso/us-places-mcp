@@ -1,0 +1,4 @@
+# Slices of real downloads are kept byte for byte (BOM, CRLF and all), so a
+# checkout on any platform matches what the services send.
+tests/fixtures/*.txt -text
+tests/fixtures/*.csv -text

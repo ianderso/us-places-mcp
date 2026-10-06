@@ -2,18 +2,18 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.ianderso/us-places-mcp",
   "title": "US Places, Then",
-  "description": "Which county held a US spot on a date; federal land descriptions and PLSS; patent to case file.",
+  "description": "US places then: county on a date, PLSS land, GNIS names, old topo maps, post offices.",
   "repository": {
     "url": "https://github.com/ianderso/us-places-mcp",
     "source": "github"
   },
-  "version": "0.1.0",
+  "version": "0.2.0",
   "packages": [
     {
       "registryType": "pypi",
       "registryBaseUrl": "https://pypi.org",
       "identifier": "us-places-mcp",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "runtimeHint": "uvx",
       "transport": {
         "type": "stdio"
@@ -30,8 +30,28 @@
           "default": "https://gis.blm.gov/arcgis/rest/services/Cadastral/BLM_Natl_PLSS_CadNSDI/MapServer"
         },
         {
+          "name": "US_PLACES_GNIS_URL",
+          "description": "USGS's GNIS map service (The National Map).",
+          "default": "https://carto.nationalmap.gov/arcgis/rest/services/geonames/MapServer"
+        },
+        {
+          "name": "US_PLACES_GNIS_ARCHIVE_URL",
+          "description": "Where USGS keeps the August 2021 GNIS state files.",
+          "default": "https://prd-tnm.s3.amazonaws.com/StagedProducts/GeographicNames/Archive/MainDomestic"
+        },
+        {
+          "name": "US_PLACES_TNM_URL",
+          "description": "The National Map's TNM Access products API.",
+          "default": "https://tnmaccess.nationalmap.gov/api/v1/products"
+        },
+        {
+          "name": "US_PLACES_DATAVERSE_URL",
+          "description": "Harvard Dataverse, which holds the US post offices dataset.",
+          "default": "https://dataverse.harvard.edu"
+        },
+        {
           "name": "US_PLACES_CACHE_DIR",
-          "description": "Directory for the on-disk response cache.",
+          "description": "Directory for the on-disk response cache and the downloaded datasets.",
           "default": "~/.cache/us-places-mcp"
         },
         {

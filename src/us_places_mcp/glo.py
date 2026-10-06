@@ -5,8 +5,10 @@ its pre-2026 deep links now redirect to the home page. Its search page
 forwards a ``searchTerm`` parameter into its search frame as a path, so a
 search can be linked as ``/s/advanced-search?searchTerm=<url-encoded
 /search?q=...>``. That form was verified on 2026-10-04 for a free-text
-search; the state and document-category filters follow the site's code and
-are not verified.
+search. The state filter is ``geostatecodes``, the parameter BLM's search
+frame was observed sending on 2026-10-06 (0.1.0 sent ``State``, which the
+site ignores). The document-category filter follows the site's code and is
+not verified.
 
 A record link uses the document id the site shows. Whether those ids survive
 re-indexing is unknown, so a citation should rest on the accession number,
@@ -27,7 +29,7 @@ def search_link(text: str, state: str | None = None, category: str | None = None
     """A link to a GLO search, 25 results a page."""
     params = [("q", " ".join(text.split())), ("page", "1"), ("pageSize", "25")]
     if state:
-        params.append(("State", state))
+        params.append(("geostatecodes", state))
     if category:
         params.append(("documenttype", category))
     inner = "/search?" + urlencode(params)

@@ -1,6 +1,6 @@
 # Service notes
 
-What the two services actually do, observed on 2026-10-05.
+What the services actually do, observed on the dates given.
 
 ## OpenHistoricalMap Overpass (`overpass-api.openhistoricalmap.org`)
 
@@ -70,13 +70,120 @@ Diablo Meridian" in NV; `45` as both "Umiat" and "Kateel River". The server
 keys on the code and names it from its own table. Stray codes left out of the
 per-state table: `05` in KS and MS, `18` in MS, `27` in NV.
 
+## USGS GNIS (`carto.nationalmap.gov`)
+
+Observed 2026-10-05 and 2026-10-06.
+`/arcgis/rest/services/geonames/MapServer`, ArcGIS 11.3, `maxRecordCount`
+2000, no key; "Data Refreshed October, 2026". Layers: 1 Incorporated Places
+(Civil), 2 Unincorporated Places (Census), 3 Populated Places, 5 Landforms,
+6 Streams (mouth), 7 Other Hydrographic Features, 8 Antarctica, 10 Crossings,
+12-14 Historical cultural-political, hydrographic and physical points (names
+end "(historical)"). Fields on each: `gaz_id`, `gaz_name`,
+`gaz_featureclass`, `state_alpha`, `county_name`, `isunknowncoords` (2 on
+every row checked). Geometry is a multipoint, except layer 7, which answered
+a point (`x`, `y`).
+
+- **No built features.** Grouping every layer by `gaz_featureclass` found no
+  Cemetery, Church, School, Post Office, Building, Locale, Park, Dam, Mine,
+  Airport, Bridge, Tower, Trail, Tunnel, Hospital, Forest, Reserve, Oilfield,
+  Well, Harbor or Cave outside Antarctica. Military appears only in layer 12,
+  as historical installations.
+- **`find` searches every layer at once:** `searchText=Waynesburg`,
+  `contains=true`, `searchFields=gaz_name`,
+  `layers=1,2,3,5,6,7,10,12,13,14`, `layerDefs={"1": "state_alpha='PA'", ...}`,
+  `sr=4326`. Case-insensitive; about 6 s for one state, where a single layer's
+  `query` took 1.2 s. With `state_alpha='OH'` the same search returned only
+  Ohio rows, so `layerDefs` does filter. "Mount Hope" with no state returned
+  78 rows. Attribute values come back as strings.
+- Exact names: `Borough of Waynesburg` (Civil), `Waynesburg` (Populated
+  Place, `gaz_id` 1190723), `West Waynesburg Census Designated Place`.
+
+### The archive of 25 August 2021 (`prd-tnm.s3.amazonaws.com`)
+
+`StagedProducts/GeographicNames/Archive/MainDomestic/` holds
+`XX_Features_20210825.txt` for each state, DC and the territories (0.8 MB for
+DC to 17.3 MB for California; Pennsylvania 9.8 MB), plus `NationalFile.zip`
+(85.7 MB), all last modified 2023-05-02. Pipe-delimited, UTF-8 with a BOM,
+CRLF, 20 columns from `FEATURE_ID` to `DATE_EDITED`, with `MAP_NAME` the
+1:24,000 quadrangle. `FEATURE_ID` equals the live `gaz_id` (Waynesburg is
+1190723 in both).
+
+- A state's file lists neighbours' features that reach into it: the PA file
+  has 321 rows whose `STATE_ALPHA` is MD, NY, WV, NJ, OH, DE or KY.
+- Names can contain double quotes (`"Old Main" Administration Building`), so
+  the file is read with quoting off.
+- Unknown coordinates are `Unknown` (DMS) and `0` (decimal).
+- PA holds 70,231 rows; 41,584 are Pennsylvania features in the dropped
+  classes (the file has 7,484 cemeteries, 4,319 churches, 7,198 schools and
+  2,275 post offices).
+  Green Mount Cemetery, Waynesburg, is `FEATURE_ID` 1176092, not in the live
+  service.
+- **ETags.** A file uploaded whole has its MD5 as ETag (SD:
+  `0f35276a70aa03a425388037f25f185b`, the MD5 of the download). PA's is
+  `e526524b9340323c4856316f60a9840f-2`, which is the MD5 of the MD5s of its
+  8 MiB parts. A missing file answers 404 `NoSuchKey`.
+
+## TNM Access (`tnmaccess.nationalmap.gov`)
+
+Observed 2026-10-05 and 2026-10-06. `GET /api/v1/products?datasets=Historical
+Topographic Maps&bbox=minX,minY,maxX,maxY&max=1000`, no key. A point given as
+a bounding box of zero size works: Waynesburg (39.896, -80.179) returned 16
+scans in 0.5 s; a box of about 20 by 10 km returned 37. A point in London
+returned `total` 0.
+
+- Each item is one scan: `title` ("USGS 1:62500-scale Quadrangle for
+  Waynesburg, PA 1901"), `publicationDate` (`1901-01-01`, the year only),
+  `extent` ("15 x 15 minute"), `urls` with `GeoPDF` and `GeoTIFF`,
+  `previewGraphicURL` (a small JPEG), `metaUrl` (ScienceBase) and
+  `boundingBox`. There is no full-size JPEG; TopoView
+  (`ngmdb.usgs.gov/topoview/viewer/#zoom/lat/lon`, checked in a browser)
+  offers the scans as JPEG and KMZ.
+- Waynesburg has one 1901 and five 1904 scans of the 15-minute Waynesburg
+  quadrangle (scan ids 222433; 170082-170084, 222435, 222437), four 1961
+  scans at 1:24,000, and 1:100,000 and 1:250,000 sheets.
+- The scan's FGDC metadata (`vendorMetaUrl`) separates "Date on Map", "Imprint
+  Year" and "Survey Year", at one more request per scan; not used.
+- **A bad request is a 200 that is not JSON:** `bbox=abc` answered
+  `{errorMessage=[BadRequest] 'Value 'abc' of property bbox must be numeric
+  and have at least four numbers' , errorType=Exception, ...}`.
+
+## Harvard Dataverse (`dataverse.harvard.edu`)
+
+Observed 2026-10-06. `GET /api/datasets/:persistentId/?persistentId=doi:10.7910/DVN/NUKCNA`
+describes *US Post Offices* (Blevins and Helbock), version 1.0, released
+2021-03-31, CC0. Files include `us-post-offices.tab` (id 4491713, ingested
+from `us-post-offices.csv`, `originalFileSize` 31,415,567), the data
+dictionary, a variant with random coordinates for unplaced offices, and the
+January 2021 GNIS national file (316 MB).
+
+- **The published MD5 is the original upload's.**
+  `/api/access/datafile/4491713?format=original` returns the CSV whose MD5 is
+  `72a67b658fdc0befa5a0f48a909cd3dc`, as listed; the default `.tab` download
+  does not match it, and `noVarHeader=true` answered 503.
+- A download answers 303 to a signed URL on `dvn-cloud-iqss.s3.amazonaws.com`.
+- The CSV: 166,140 rows, 29 columns, comma-separated with quoted strings, LF.
+  112,521 have coordinates. `Discontinued` is blank for 29,089 (open in 2000),
+  `Established` for 44. A few dates are slips: an `Established` of 185, a
+  `Discontinued` of 19223, 45 offices discontinued before established. Six
+  offices are in `MI/OH`, one in `VAy`. Helbock often writes names run
+  together (`DESMET`, `SPRINGLAKE`) and variants in parentheses
+  (`WAYNESBURG(H)`).
+- Kingsbury County, S.D.: 33 offices, 15 open at some time in 1890.
+
 ## GLO Records links
 
 Verified 2026-10-04 (see the research spec this server came from): a search
 link is `https://glorecords.blm.gov/s/advanced-search?searchTerm=` followed by
-the URL-encoded path `/search?q=…&page=1&pageSize=25`. The `State` and
-`documenttype` parameters are taken from the site's code, not verified. A
-record link is `…/s/advanced-search#/searchresults?documentid=<id>`.
+the URL-encoded path `/search?q=…&page=1&pageSize=25`. A record link is
+`…/s/advanced-search#/searchresults?documentid=<id>`.
+
+- **The state filter is `geostatecodes`.** On 2026-10-06 BLM's search frame
+  was observed sending `geostatecodes=SD` for a South Dakota search. The
+  `State=SD` that 0.1.0 sent, read from the site's code, is ignored by the
+  site, so 0.1.0's state filter did nothing. The page itself is a Salesforce
+  community app and does not show the parameter; the search runs in a frame.
+- The `documenttype` parameter is still taken from the site's code and not
+  verified.
 
 ## National Archives bridge
 

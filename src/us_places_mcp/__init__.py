@@ -6,4 +6,4 @@ from a land patent to the case file behind it. Nothing here writes anywhere,
 and nothing here keeps a family tree.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
