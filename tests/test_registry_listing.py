@@ -47,3 +47,8 @@ def test_no_setting_is_required_or_secret():
     for var in PACKAGE["environmentVariables"]:
         assert not var.get("isRequired"), var["name"]
         assert not var.get("isSecret"), var["name"]
+
+
+def test_the_description_fits_the_registry_limit():
+    """The MCP Registry refuses a description over 100 characters, after PyPI has the release."""
+    assert len(SERVER_JSON["description"]) <= 100
